@@ -237,6 +237,7 @@ body {
             justify-content: flex-end;
             .tagList {
                 flex-wrap: wrap;
+                display: flex;
                 .tag {
                     font-size: 12px;
                     font-weight: 600;
@@ -423,6 +424,15 @@ body {
             }
             .tagcont {
                 justify-content: center;
+                .tagList {
+                    all: unset;
+                    display: flex;
+                    gap: 2px !important;
+                    flex-wrap: wrap;
+                    .tag {
+                        font-size: 8px;
+                    }
+                }
             }
         }
     }

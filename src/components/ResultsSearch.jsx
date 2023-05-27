@@ -1,9 +1,12 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext,useLayoutEffect } from 'react'
 import { userContext } from '../context/context'
 import { getTaglist } from '../data/data'
 import { useRef } from 'react'
 import {Link} from "react-router-dom"
+import { useEffect } from 'react';
+import { useCookies } from "react-cookie";
+
 function ResultsSearch() {
     let {temp,setTemp,tagList,setTags,setSearch} =useContext(userContext)
         let inputRef = useRef()
@@ -16,6 +19,7 @@ function ResultsSearch() {
         let res = await getTaglist(value)    
         console.log(res)
         setTemp(res)
+       
         
     }
 
@@ -24,19 +28,26 @@ function ResultsSearch() {
         if (tagList.includes(value) == false) {
           console.log("false") 
           setTags(curr=>[...curr,value])
-          inputRef.current.value = ''
+          inputRef.current.value = '';
           setTemp([])
-          
         }
         else{
           alert("already there")
         }
+       
   
     }
-
+    const [cookie,setCookie,removeCookie] = useCookies()
 
     
-  
+    useLayoutEffect(()=>{
+      if(cookie.search != undefined || cookie.search != null) {
+        setTags(cookie.search)
+        setSearch(cookie.search)
+      }
+     },[])
+     
+
     
   return (
     <div className="Rsearch">
@@ -45,6 +56,7 @@ function ResultsSearch() {
       }}/>
           <button onClick={e=>{
             setSearch(tagList)
+            setCookie("search", tagList)
           }}><Link to={"/results/1"}>Submit
           </Link></button>
       <div className="temp">

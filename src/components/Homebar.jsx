@@ -4,7 +4,9 @@ import Taglist from './Taglist'
 import ResultsSearch from './ResultsSearch'
 import {Link} from "react-router-dom"
 
+
 function Homebar() {
+  
   return (
     <div className="homeBar">
       <div className="cont">
