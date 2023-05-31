@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { posts } from 'rule34js';
 import xml2td, { td2xml } from 'xml2td';
 
+let s = "sS"
 
 
 export let  getSingle = async (id) => {
