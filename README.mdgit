@@ -1,0 +1,1 @@
+# r34app initgit add README.mdgit commit -m first commitgit branch -M maingit remote add origin https://github.com/desto4q/r34app.gitgit push -u origin main
