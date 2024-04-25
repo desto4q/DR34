@@ -2,11 +2,18 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
-import {AiFillHeart, AiFillHome, AiOutlineSearch, AiOutlineSetting} from 'rn-icons/ai';
+import {
+  AiFillFolder,
+  AiFillHeart,
+  AiFillHome,
+  AiOutlineSearch,
+  AiOutlineSetting,
+} from 'rn-icons/ai';
 import {colors, tw} from '../exports/exports';
 import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SavedScreen from '../screens/SavedScreen';
+import FavoriteScreen from '../screens/FavoriteScreen';
 
 let Tabs = createBottomTabNavigator();
 let f_State = (e: boolean) => tw(e ? 'opacity-100' : 'opacity-50');
@@ -49,12 +56,12 @@ export default function RTabs() {
         }}
       />
       <Tabs.Screen
-        name="SettingsScreen"
-        component={SettingsScreen}
+        name="FavoriteScreen"
+        component={FavoriteScreen}
         options={{
           tabBarIcon: ({focused}) => {
             return (
-              <AiOutlineSetting
+              <AiFillHeart
                 style={{...f_State(focused)}}
                 fill={focused ? colors.yellow[500] : colors.gray[500]}
                 size={24}
@@ -63,13 +70,28 @@ export default function RTabs() {
           },
         }}
       />
-       <Tabs.Screen
+      <Tabs.Screen
         name="SavedScreen"
         component={SavedScreen}
         options={{
           tabBarIcon: ({focused}) => {
             return (
-              <AiFillHeart
+              <AiFillFolder
+                style={{...f_State(focused)}}
+                fill={focused ? colors.yellow[500] : colors.gray[500]}
+                size={24}
+              />
+            );
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="SettingsScreen"
+        component={SettingsScreen}
+        options={{
+          tabBarIcon: ({focused}) => {
+            return (
+              <AiOutlineSetting
                 style={{...f_State(focused)}}
                 fill={focused ? colors.yellow[500] : colors.gray[500]}
                 size={24}

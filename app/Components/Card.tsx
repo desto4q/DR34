@@ -1,8 +1,11 @@
 import {View, Text, Image} from 'react-native';
 import React, {useEffect} from 'react';
-import {tw} from '../exports/exports';
+import {parser, tw} from '../exports/exports';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import {storage} from '../storage/storage';
+import {BiSave} from 'rn-icons/bi';
+import {exists} from '@dr.pogodin/react-native-fs';
 
 interface ImageData {
   high_res_file: {
@@ -33,10 +36,34 @@ interface ImageData {
     meta: string[];
   };
 }
+let date = new Date().toLocaleDateString('en-us', {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
 export default function Card({item}: {item: ImageData}) {
+  let addToFav = () => {
+    if (storage.contains(String(date))) {
+      let prev: ImageData[] = parser(storage.getString(date));
+      for (let i of prev) {
+        if (i.id == item.id) {
+          console.log('exists');
+          break;
+        } else {
+          storage.set(date, JSON.stringify([...prev, item]));
+          console.log('added');
+        }
+      }
+    } else {
+      storage.set(date, JSON.stringify([item]));
+      console.log('done');
+    }
+  };
   let navigate: any = useNavigation();
   return (
-    <View style={tw('m-1 bg-red-200  rounded-md  w-[45%]')}>
+    <View style={tw('m-1  rounded-md  w-[45%]')}>
       <TouchableOpacity
         onPress={() => {
           navigate.navigate('ImageScreen', {
@@ -48,6 +75,14 @@ export default function Card({item}: {item: ImageData}) {
           source={{uri: item.preview_file.url}}
           style={tw('h-50 w-full rounded-md')}
         />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => {
+          addToFav();
+        }}
+        style={tw('mt-4 bg-emerald-400 rounded-md p-1 self-start')}>
+        <BiSave size={18} />
       </TouchableOpacity>
     </View>
   );

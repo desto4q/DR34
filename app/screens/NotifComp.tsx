@@ -25,8 +25,10 @@ export default function NotifComp({
         ...tw(`p-2 py-4 border rounded-md border-amber-300 bg-neutral-700 `),
         ...wrapperstyle,
       }}>
-      <Text style={{...tw(`text-lg`), ...titlestyle}}>{title}</Text>
-      <Text style={{...tw(), ...descStyle}}>{desc}</Text>
+      {title ? (
+        <Text style={{...tw(`text-lg`), ...titlestyle}}>{title}</Text>
+      ) : null}
+      {desc ? <Text style={{...tw(), ...descStyle}}>{desc}</Text> : null}
       {children}
     </View>
   );
