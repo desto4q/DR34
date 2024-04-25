@@ -54,7 +54,7 @@ export default function SearchScreen() {
           }}
           value={searchInput}
           multiline
-          style={{...tw('mr-auto w-auto'),maxWidth: "82%"}}
+          style={{...tw('mr-auto w-auto'), maxWidth: '82%'}}
         />
         <TouchableOpacity
           disabled={tags.length > 0 ? false : true}

@@ -23,6 +23,7 @@ declare module 'react-native-video-controls' {
       disableVolume?: boolean;
       disableTimer?: boolean;
       disableBack?: boolean;
+      thumbnailuri?: string
       
     };
   

@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/progress-bar-android": "^1.0.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
@@ -23,8 +24,7 @@
     "react-native-screens": "^3.31.1",
     "react-native-svg": "^15.2.0",
     "react-native-system-navigation-bar": "^2.6.4",
-    "react-native-video": "^5.2.1",
-    "react-native-video-controls": "^2.8.1",
+    "react-native-video": "^6.0.0-beta.8",
     "react-query": "^3.39.3",
     "rn-icons": "^1.0.4",
     "tailwind-colors": "^1.1.0",
@@ -41,6 +41,7 @@
     "@react-native/typescript-config": "0.74.81",
     "@types/react": "^18.2.6",
     "@types/react-native-video": "^5.0.20",
+    "@types/react-native-video-player": "^0.10.7",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
 import VideoPlayer from 'react-native-video-controls';
@@ -11,6 +11,9 @@ import {
 import {Notifier, NotifierComponents} from 'react-native-notifier';
 import {tw} from '../exports/exports';
 import NotifComp from './NotifComp';
+import {ProgressBar} from '@react-native-community/progress-bar-android';
+import {AiFillCloseCircle} from 'rn-icons/ai';
+import Video, {VideoRef} from 'react-native-video';
 
 interface ImageData {
   high_res_file: {
@@ -72,10 +75,10 @@ const start = () => {
 const VideoScreen = ({route}: any) => {
   const navigator = useNavigation();
   const {item}: {item: ImageData} = route.params;
-  const videoRef = useRef(null);
+  const videoRef = useRef<VideoRef>(null);
   const [prog, setProg] = useState<number>(0);
   const [jobid, setJobid] = useState<number>(0);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [downloadState, setDownloadState] = useState<boolean>(false);
 
   const downloadVideo = async () => {
     try {
@@ -88,8 +91,10 @@ const VideoScreen = ({route}: any) => {
         begin: e => {
           if (e.jobId) {
             stopDownload(jobid);
+            setJobid(0);
           }
-          start();
+
+          setDownloadState(true);
           setJobid(e.jobId);
           setProg(0);
         },
@@ -98,9 +103,11 @@ const VideoScreen = ({route}: any) => {
         setJobid(0);
         setProg(0);
         done();
+        setDownloadState(false);
       });
     } catch (err) {
       console.log(err);
+      setDownloadState(false);
     }
   };
 
@@ -114,13 +121,31 @@ const VideoScreen = ({route}: any) => {
 
   return (
     <View style={tw('p-2 flex-1')}>
-      <NotifComp wrapperstyle={tw("bg-red-200")}/>
+      {downloadState ? (
+        <NotifComp
+          wrapperstyle={tw('absolute w-full z-10 m-0 opacity-100')}
+          title="download started"
+          desc="video is downloading">
+          <TouchableOpacity>
+            <AiFillCloseCircle />
+          </TouchableOpacity>
+          <ProgressBar
+            indeterminate={false}
+            progress={prog / 10}
+            styleAttr="Horizontal"
+            color="#2196F3"
+          />
+        </NotifComp>
+      ) : null}
       <View style={tw('h-62')}>
-        <VideoPlayer
-          disableFullscreen
+        <Video
+          ref={videoRef}
+          paused
           controls
-          source={{uri: item.high_res_file.url}}
-        />
+          fullscreenAutorotate
+          fullscreenOrientation="landscape"
+          style={tw('bg-red-200 p-2 h-full')}
+          source={{uri: item.high_res_file.url}}></Video>
       </View>
 
       <ScrollView style={tw('flex-1 p-2')}>
