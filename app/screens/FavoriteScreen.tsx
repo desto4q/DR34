@@ -2,7 +2,7 @@ import {View, Text, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {storage} from '../storage/storage';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {parser, tw} from '../exports/exports';
+import {date, parser, tw} from '../exports/exports';
 import {ImageData, SavedItems} from '../@types/types';
 import {useNavigation} from '@react-navigation/native';
 import {AiOutlineReload} from 'rn-icons/ai';
@@ -49,11 +49,6 @@ export default function FavoriteScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* <View>
-        {saved?.map(item => {
-          return <Text>{item}</Text>;
-        })}
-      </View> */}
       <ScrollView
         style={tw('mt-0 bg-gray-900 rounded-lg')}
         contentContainerStyle={tw(
@@ -61,7 +56,7 @@ export default function FavoriteScreen() {
         )}>
         {saved?.map(item => {
           return (
-            <View style={tw('w-[45%]   mt-2  p-2 ')}>
+            <View key={item} style={tw('w-[45%]   mt-2  p-2 ')}>
               <TouchableOpacity
                 style={tw('gap-2')}
                 onPress={() => {
@@ -75,7 +70,7 @@ export default function FavoriteScreen() {
                       uniqolor.random().color
                     }]`,
                   )}>
-                  <Text>{item}</Text>
+                  <Text>{item == date ? 'Today' : item}</Text>
                 </View>
               </TouchableOpacity>
             </View>

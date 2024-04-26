@@ -1,5 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Button} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Button,
+  Easing,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
 import {
@@ -52,11 +59,11 @@ const VideoScreen = ({route}: any) => {
   const [jobid, setJobid] = useState<number>(0);
   const [downloadState, setDownloadState] = useState<boolean>();
 
-  const downloadVideo = async () => {
+  const downloadVideo = async ({id}: {id: string | number}) => {
     try {
       await downloadFile({
         fromUrl: item?.high_res_file?.url,
-        toFile: `${ExternalStorageDirectoryPath}/r34/video/${item.id}.mp4`,
+        toFile: `${ExternalStorageDirectoryPath}/r34/video/${id}.mp4`,
         progress: e => {
           setProg(prog => prog + 1);
         },
@@ -74,7 +81,7 @@ const VideoScreen = ({route}: any) => {
       }).promise.then(res => {
         downloadFile({
           fromUrl: item?.low_res_file.url,
-          toFile: `${ExternalStorageDirectoryPath}/r34/video/.thumbs/${item.id}.png`,
+          toFile: `${ExternalStorageDirectoryPath}/r34/video/.thumbs/${id}.png`,
         });
         setJobid(0);
         setProg(0);
@@ -87,20 +94,32 @@ const VideoScreen = ({route}: any) => {
       setDownloadState(false);
     }
   };
-  let pathChecker = async () => {
+  let pathChecker = async ({id}: {id: string | number}) => {
     if (await exists(ExternalStorageDirectoryPath + '/r34/video/')) {
-      try {
-        await downloadVideo();
-      } catch (err) {
-        await downloadVideo();
+      if (
+        await exists(`${ExternalStorageDirectoryPath}/r34/video/${id}.mp4`)
+      ) {
+        Notifier.showNotification({
+          title: 'Video exists',
+          easing: Easing.ease,
+          duration: 1500,
+          showAnimationDuration: 600,
+        });
+      } else {
+        try {
+          await downloadVideo({id: id});
+        } catch (err) {
+          await downloadVideo({id: id});
+        }
       }
     } else {
       try {
-        await mkdir(ExternalStorageDirectoryPath + '/r34/video/' && ExternalStorageDirectoryPath + '/r34/video/.thumbs/' ).then(
-          async resp => {
-            await downloadVideo();
-          },
-        );
+        await mkdir(
+          ExternalStorageDirectoryPath + '/r34/video/' &&
+            ExternalStorageDirectoryPath + '/r34/video/.thumbs/',
+        ).then(async resp => {
+          await downloadVideo({id: id});
+        });
       } catch (err) {
         return err;
       }
@@ -149,7 +168,9 @@ const VideoScreen = ({route}: any) => {
 
       <ScrollView style={tw('flex-1 p-2')}>
         <TouchableOpacity
-          onPress={pathChecker}
+          onPress={() => {
+            pathChecker({id: item.id});
+          }}
           style={tw('bg-amber-500 p-1 rounded-sm mt-4 self-start')}>
           <Text style={tw('text-black text-lg ')}>Download</Text>
         </TouchableOpacity>

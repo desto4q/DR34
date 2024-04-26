@@ -15,8 +15,7 @@ import {RefreshControl, ScrollView} from 'react-native-gesture-handler';
 import {AiOutlineArrowLeft, AiOutlineArrowRight} from 'rn-icons/ai';
 import Loading from '../Components/Loading';
 import VideoCard from '../Components/VideoCard';
-import { ImageData } from '../@types/types';
-
+import {ImageData} from '../@types/types';
 
 interface IResults {
   data: ImageData[];
@@ -101,8 +100,6 @@ export default function Home() {
           })}
         </ScrollView>
       )}
-
-     
     </View>
   );
 }

@@ -1,42 +1,29 @@
 import {View, Text, Image, Easing} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {parser, tw} from '../exports/exports';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {storage} from '../storage/storage';
 import {BiSave} from 'rn-icons/bi';
-import {exists} from '@dr.pogodin/react-native-fs';
-import {Notifier} from 'react-native-notifier';
-
-interface ImageData {
-  high_res_file: {
-    height: number;
-    url: string;
-    width: number;
-  };
-  id: number;
-  low_res_file: {
-    height: number;
-    url: string;
-    width: number;
-  };
-  media_type: 'image';
-  preview_file: {
-    height: number | null;
-    url: string;
-    width: number | null;
-  };
-  rating: 'explicit';
-  score: number;
-  sources: string[];
-  tags: {
-    artist: string[];
-    character: string[];
-    copyright: string[];
-    general: string[];
-    meta: string[];
-  };
-}
+import {
+  ExternalStorageDirectoryPath,
+  downloadFile,
+  exists,
+  mkdir,
+  stopDownload,
+} from '@dr.pogodin/react-native-fs';
+import {Notifier, NotifierComponents} from 'react-native-notifier';
+import {ImageData} from '../@types/types';
+const done = () => {
+  return Notifier.showNotification({
+    title: 'Download complete',
+    description: 'check saved for downloads',
+    Component: NotifierComponents.Alert,
+    componentProps: {
+      alertType: 'success',
+    },
+  });
+};
 let date = new Date().toLocaleDateString('en-us', {
   weekday: 'short',
   year: 'numeric',
@@ -71,6 +58,7 @@ let showAdded = () => {
 };
 
 export default function Card({item}: {item: ImageData}) {
+ 
   let addToFav = () => {
     if (storage.contains(String(date))) {
       let prev: ImageData[] = parser(storage.getString(date));

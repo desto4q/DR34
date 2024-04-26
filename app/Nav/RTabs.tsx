@@ -12,7 +12,7 @@ import {
 import {colors, tw} from '../exports/exports';
 import SearchScreen from '../screens/SearchScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import SavedScreen from '../screens/SavedScreen';
+import SavedScreen from '../screens/DownloadsScreen';
 import FavoriteScreen from '../screens/FavoriteScreen';
 
 let Tabs = createBottomTabNavigator();
