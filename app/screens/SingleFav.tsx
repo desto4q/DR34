@@ -9,13 +9,14 @@ import VideoCard from '../Components/VideoCard';
 import Card from '../Components/Card';
 import SavedCard from '../Components/SavedCard';
 import {AiOutlineLoading, AiOutlineReload} from 'rn-icons/ai';
+import SavedVIdeoCard from '../Components/SavedVIdeoCard';
 
 export default function SingleFav({route}: any) {
   let {date} = route.params;
   let [ItemList, setItemList] = useState<ImageData[]>();
   let getALLItems = () => {
     let resp: ImageData[] = parser(storage.getString(date));
-    
+
     setItemList(resp);
     return resp;
   };
@@ -36,7 +37,14 @@ export default function SingleFav({route}: any) {
         contentContainerStyle={tw('flex-row flex-wrap justify-center')}>
         {ItemList?.map((item, index) => {
           if (item.media_type != 'image') {
-            return <VideoCard key={index} item={item} />;
+            return (
+              <SavedVIdeoCard
+                currdate={date}
+                refresh={setItemList}
+                key={index}
+                item={item}
+              />
+            );
           }
           return (
             <SavedCard

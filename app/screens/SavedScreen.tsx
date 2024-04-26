@@ -16,7 +16,7 @@ export default function SavedScreen() {
 
   let readDownloads = async () => {
     let resp = await readDir(ExternalStorageDirectoryPath + '/r34');
-
+    console.log(resp)
     setFileList(resp);
     return resp;
     // let empty: ImageData[] = [];

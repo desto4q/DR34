@@ -6,6 +6,7 @@ import {parser, tw} from '../exports/exports';
 import {ImageData, SavedItems} from '../@types/types';
 import {useNavigation} from '@react-navigation/native';
 import {AiOutlineReload} from 'rn-icons/ai';
+import uniqolor from 'uniqolor';
 let data = new Date().toLocaleDateString('en-us', {
   weekday: 'short',
   year: 'numeric',
@@ -20,30 +21,20 @@ interface ItemsCard {
 export default function FavoriteScreen() {
   let navigate: any = useNavigation();
   let [saved, setSaved] = useState<string[]>();
-  let [savedItems, setSavedItems] = useState<ItemsCard[]>([]);
   let checkStore = () => {
     let resp = storage.getAllKeys();
-    let newList: ItemsCard[] = [];
-    for (let i of resp) {
-      let itmList: ImageData[] = parser(storage.getString(i));
-      if (itmList.length< 1) {
-        storage.delete(i)
-      }
-      let itm = {
-        date: String(i),
-        items: itmList,
-      };
-      newList.push(itm);
-    }
-    setSavedItems(newList);
-
-
-
     setSaved(resp);
+    for (let itm of resp) {
+      let itmResp = parser(storage.getString(itm));
+      if (itmResp.length < 1) {
+        storage.delete(itm);
+      }
+    }
   };
   useEffect(() => {
     checkStore();
   }, []);
+
   return (
     <View style={tw('flex-1')}>
       <View style={tw('p-2 flex-row items-center justify-between')}>
@@ -68,29 +59,24 @@ export default function FavoriteScreen() {
         contentContainerStyle={tw(
           'flex flex-row flex-wrap justify-center gap-2',
         )}>
-        {savedItems?.map(item => {
-          // return <Text>{item.date}</Text>;
-          
+        {saved?.map(item => {
           return (
             <View style={tw('w-[45%]   mt-2  p-2 ')}>
               <TouchableOpacity
                 style={tw('gap-2')}
                 onPress={() => {
                   navigate.navigate('SingleFav', {
-                    date: item.date,
+                    date: item,
                   });
                 }}>
-                <Text>{item.date}</Text>
-                {item?.items.length > 0 ? (
-                  <Image
-                    style={tw('h-50 rounded-md')}
-                    source={{uri: item?.items[0]?.low_res_file.url}}
-                  />
-                ) : (
-                  <View style={tw('bg-neutral-800 h-50 w-full p-2 rounded-md')}>
-                    <Text>Empty</Text>
-                  </View>
-                )}
+                <View
+                  style={tw(
+                    `bg-neutral-800 h-50 w-full p-2 rounded-md border border-[${
+                      uniqolor.random().color
+                    }]`,
+                  )}>
+                  <Text>{item}</Text>
+                </View>
               </TouchableOpacity>
             </View>
           );

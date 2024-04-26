@@ -44,7 +44,7 @@ export default function SearchScreen() {
   // }, [tags]);
   let navigation: any = useNavigation();
   return (
-    <View style={tw('flex-1 p-2')}>
+    <View style={tw('flex-1 p-2 bg-gray-900')}>
       <View style={tw('bg-neutral-700 flex-row items-center px-2 rounded-md')}>
         <BiSearch style={tw()} fill={colors.yellow[400]} size={28} />
         <TextInput
@@ -54,7 +54,7 @@ export default function SearchScreen() {
           }}
           value={searchInput}
           multiline
-          style={{...tw('mr-auto w-auto'), maxWidth: '82%'}}
+          style={{...tw('mr-auto w-[80%]')}}
         />
         <TouchableOpacity
           disabled={tags.length > 0 ? false : true}

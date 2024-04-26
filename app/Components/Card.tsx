@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Easing} from 'react-native';
 import React, {useEffect} from 'react';
 import {parser, tw} from '../exports/exports';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import {storage} from '../storage/storage';
 import {BiSave} from 'rn-icons/bi';
 import {exists} from '@dr.pogodin/react-native-fs';
+import {Notifier} from 'react-native-notifier';
 
 interface ImageData {
   high_res_file: {
@@ -42,9 +43,34 @@ let date = new Date().toLocaleDateString('en-us', {
   month: 'short',
   day: 'numeric',
 });
+let showFound = () => {
+  Notifier.showNotification({
+    title: 'found',
+    description: 'Item exists',
+    duration: 1000,
+
+    showAnimationDuration: 100,
+    showEasing: Easing.cubic,
+    onHidden: () => console.log('Hidden'),
+    onPress: () => console.log('Press'),
+    hideOnPress: false,
+  });
+};
+let showAdded = () => {
+  Notifier.showNotification({
+    title: 'Added',
+    description: `added to ${date}`,
+    duration: 1000,
+
+    showAnimationDuration: 100,
+    showEasing: Easing.cubic,
+    onHidden: () => console.log('Hidden'),
+    onPress: () => console.log('Press'),
+    hideOnPress: false,
+  });
+};
 
 export default function Card({item}: {item: ImageData}) {
-  
   let addToFav = () => {
     if (storage.contains(String(date))) {
       let prev: ImageData[] = parser(storage.getString(date));
@@ -52,21 +78,21 @@ export default function Card({item}: {item: ImageData}) {
       for (let i of prev) {
         if (i.id == item.id) {
           exists = true;
-          console.log('found');
+
           break;
         }
         if (!exists) {
-          
+          showFound();
         }
       }
       if (exists == false) {
         storage.set(date, JSON.stringify([...prev, item]));
         console.log('added');
         console.log('safe');
+        showAdded();
       }
     } else {
       storage.set(date, JSON.stringify([item]));
-      console.log('done');
     }
   };
   let navigate: any = useNavigation();

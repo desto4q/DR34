@@ -2,10 +2,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Button} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useQuery} from 'react-query';
-import VideoPlayer from 'react-native-video-controls';
 import {
   ExternalStorageDirectoryPath,
   downloadFile,
+  exists,
+  mkdir,
   stopDownload,
 } from '@dr.pogodin/react-native-fs';
 import {Notifier, NotifierComponents} from 'react-native-notifier';
@@ -14,9 +15,7 @@ import NotifComp from './NotifComp';
 import {ProgressBar} from '@react-native-community/progress-bar-android';
 import {AiFillCloseCircle} from 'rn-icons/ai';
 import Video, {VideoRef} from 'react-native-video';
-import { ImageData } from '../@types/types';
-
-
+import {ImageData} from '../@types/types';
 
 const done = () => {
   return Notifier.showNotification({
@@ -57,7 +56,7 @@ const VideoScreen = ({route}: any) => {
     try {
       await downloadFile({
         fromUrl: item?.high_res_file?.url,
-        toFile: `${ExternalStorageDirectoryPath}/r34/${item.id}.mp4`,
+        toFile: `${ExternalStorageDirectoryPath}/r34/video/${item.id}.mp4`,
         progress: e => {
           setProg(prog => prog + 1);
         },
@@ -73,14 +72,38 @@ const VideoScreen = ({route}: any) => {
         },
         progressDivider: 10,
       }).promise.then(res => {
+        downloadFile({
+          fromUrl: item?.low_res_file.url,
+          toFile: `${ExternalStorageDirectoryPath}/r34/video/.thumbs/${item.id}.png`,
+        });
         setJobid(0);
         setProg(0);
+
         done();
         setDownloadState(false);
       });
     } catch (err) {
       console.log(err);
       setDownloadState(false);
+    }
+  };
+  let pathChecker = async () => {
+    if (await exists(ExternalStorageDirectoryPath + '/r34/video/')) {
+      try {
+        await downloadVideo();
+      } catch (err) {
+        await downloadVideo();
+      }
+    } else {
+      try {
+        await mkdir(ExternalStorageDirectoryPath + '/r34/video/' && ExternalStorageDirectoryPath + '/r34/video/.thumbs/' ).then(
+          async resp => {
+            await downloadVideo();
+          },
+        );
+      } catch (err) {
+        return err;
+      }
     }
   };
 
@@ -126,7 +149,7 @@ const VideoScreen = ({route}: any) => {
 
       <ScrollView style={tw('flex-1 p-2')}>
         <TouchableOpacity
-          onPress={downloadVideo}
+          onPress={pathChecker}
           style={tw('bg-amber-500 p-1 rounded-sm mt-4 self-start')}>
           <Text style={tw('text-black text-lg ')}>Download</Text>
         </TouchableOpacity>
