@@ -44,17 +44,25 @@ let date = new Date().toLocaleDateString('en-us', {
 });
 
 export default function Card({item}: {item: ImageData}) {
+  
   let addToFav = () => {
     if (storage.contains(String(date))) {
       let prev: ImageData[] = parser(storage.getString(date));
+      let exists = false;
       for (let i of prev) {
         if (i.id == item.id) {
-          console.log('exists');
+          exists = true;
+          console.log('found');
           break;
-        } else {
-          storage.set(date, JSON.stringify([...prev, item]));
-          console.log('added');
         }
+        if (!exists) {
+          
+        }
+      }
+      if (exists == false) {
+        storage.set(date, JSON.stringify([...prev, item]));
+        console.log('added');
+        console.log('safe');
       }
     } else {
       storage.set(date, JSON.stringify([item]));

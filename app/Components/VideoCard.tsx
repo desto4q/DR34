@@ -1,8 +1,10 @@
 import {View, Text, Image} from 'react-native';
 import React from 'react';
-import {tw} from '../exports/exports';
+import {date, parser, tw} from '../exports/exports';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
+import {storage} from '../storage/storage';
+import {BiSave} from 'rn-icons/bi';
 
 interface ImageData {
   high_res_file: {
@@ -34,6 +36,29 @@ interface ImageData {
   };
 }
 export default function VideoCard({item}: {item: ImageData}) {
+  let addToFav = () => {
+    if (storage.contains(String(date))) {
+      let prev: ImageData[] = parser(storage.getString(date));
+      let exists = false;
+      for (let i of prev) {
+        if (i.id == item.id) {
+          exists = true;
+          console.log('found');
+          break;
+        }
+        if (!exists) {
+        }
+      }
+      if (exists == false) {
+        storage.set(date, JSON.stringify([...prev, item]));
+        console.log('added');
+        console.log('safe');
+      }
+    } else {
+      storage.set(date, JSON.stringify([item]));
+      console.log('done');
+    }
+  };
   let navigate: any = useNavigation();
   return (
     <View style={tw(' m-1  rounded-md  w-[45%]')}>
@@ -48,6 +73,13 @@ export default function VideoCard({item}: {item: ImageData}) {
           source={{uri: item.preview_file.url}}
           style={tw('h-50 w-full rounded-md')}
         />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          addToFav();
+        }}
+        style={tw('mt-4 bg-emerald-400 rounded-md p-1 self-start')}>
+        <BiSave size={18} />
       </TouchableOpacity>
     </View>
   );

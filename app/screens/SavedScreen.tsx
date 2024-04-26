@@ -6,29 +6,32 @@ import {
   readDir,
 } from '@dr.pogodin/react-native-fs';
 import {ScrollView} from 'react-native-gesture-handler';
-import {tw} from '../exports/exports';
+import {date, tw} from '../exports/exports';
 import VideoPlayer from 'react-native-video';
+import {storage} from '../storage/storage';
+import {ImageData} from '../@types/types';
 
 export default function SavedScreen() {
   let [fileList, setFileList] = useState<ReadDirResItemT[]>();
 
   let readDownloads = async () => {
-    console.log('s');
     let resp = await readDir(ExternalStorageDirectoryPath + '/r34');
 
     setFileList(resp);
     return resp;
+    // let empty: ImageData[] = [];
+    // storage.set(date, JSON.stringify(empty));
   };
   useEffect(() => {}, []);
   return (
     <View style={tw('p-2 flex-1')}>
       <Text>SavedScreen</Text>
       <TouchableOpacity
-        style={tw('p-2 bg-emerald-700 self-start mt-4')}
+        style={tw('p-2 bg-amber-400 self-start mt-4')}
         onPress={readDownloads}>
         <Text>readdownloads</Text>
       </TouchableOpacity>
-      <ScrollView>
+      {/* <ScrollView>
         {fileList?.map(({path}) => {
           return (
             <View style={tw('h-50 bg-slate-400  mt-4')}>
@@ -42,7 +45,7 @@ export default function SavedScreen() {
           );
         })}
         <View style={tw('h-16')}></View>
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }

@@ -110,6 +110,7 @@ export default function Home() {
         <Loading />
       ) : (
         <ScrollView
+          style={tw('bg-gray-900 pt-2  rounded-lg ')}
           refreshControl={
             <RefreshControl
               refreshing={isFetching}
@@ -118,7 +119,7 @@ export default function Home() {
               }}
             />
           }
-          contentContainerStyle={tw('flex-row flex-wrap justify-center')}>
+          contentContainerStyle={tw('flex-row flex-wrap justify-center pb-18')}>
           {data?.data.map(item => {
             if (item.media_type != 'image') {
               return <VideoCard key={item.id} item={item} />;
@@ -128,7 +129,7 @@ export default function Home() {
         </ScrollView>
       )}
 
-      <View style={tw('h-14')}></View>
+     
     </View>
   );
 }

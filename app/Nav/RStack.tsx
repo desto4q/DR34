@@ -4,7 +4,7 @@ import RTabs from './RTabs';
 import VideoScreen from '../screens/VideoScreen';
 import SearchResultsScreen from '../screens/SearchResultsScreen';
 import ImageScreen from '../screens/ImageScreen';
-import FullScreen from '../screens/FullScreen';
+import SingleFav from '../screens/SingleFav';
 
 let Stack = createNativeStackNavigator();
 function RStack() {
@@ -19,7 +19,11 @@ function RStack() {
       <Stack.Screen name="VideoScreen" component={VideoScreen} />
       <Stack.Screen name="ImageScreen" component={ImageScreen} />
       <Stack.Screen name="SearchResults" component={SearchResultsScreen} />
-      <Stack.Screen name="FullScreen" component={FullScreen} />
+      <Stack.Screen
+        name="SingleFav"
+        component={SingleFav}
+        options={{animation: 'slide_from_right'}}
+      />
     </Stack.Navigator>
   );
 }

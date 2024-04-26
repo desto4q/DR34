@@ -5,6 +5,7 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {parser, tw} from '../exports/exports';
 import {ImageData, SavedItems} from '../@types/types';
 import {useNavigation} from '@react-navigation/native';
+import {AiOutlineReload} from 'rn-icons/ai';
 let data = new Date().toLocaleDateString('en-us', {
   weekday: 'short',
   year: 'numeric',
@@ -17,7 +18,7 @@ interface ItemsCard {
   items: ImageData[];
 }
 export default function FavoriteScreen() {
-  let navigate = useNavigation<any>();
+  let navigate: any = useNavigation();
   let [saved, setSaved] = useState<string[]>();
   let [savedItems, setSavedItems] = useState<ItemsCard[]>([]);
   let checkStore = () => {
@@ -25,6 +26,9 @@ export default function FavoriteScreen() {
     let newList: ItemsCard[] = [];
     for (let i of resp) {
       let itmList: ImageData[] = parser(storage.getString(i));
+      if (itmList.length< 1) {
+        storage.delete(i)
+      }
       let itm = {
         date: String(i),
         items: itmList,
@@ -33,15 +37,8 @@ export default function FavoriteScreen() {
     }
     setSavedItems(newList);
 
-    console.log(newList);
-    // for (let i of resp) {
-    //   let itmList: ImageData[] = parser(storage.getString(i));
-    //   let itm = {
-    //     date: String(i),
-    //     items: itmList,
-    //   };
-    //   setSavedItems(prev => [...prev, itm]);
-    // }
+
+
     setSaved(resp);
   };
   useEffect(() => {
@@ -49,36 +46,51 @@ export default function FavoriteScreen() {
   }, []);
   return (
     <View style={tw('flex-1')}>
-      <Text>{data}</Text>
-      <TouchableOpacity
-        onPress={() => {
-          checkStore();
-          // console.log(savedItems);
-        }}
-        style={tw('p-2 bg-emerald-600')}>
-        <Text>click me</Text>
-      </TouchableOpacity>
+      <View style={tw('p-2 flex-row items-center justify-between')}>
+        <Text style={tw('text-lg capitalize')}>Saved Items</Text>
+        <TouchableOpacity
+          onPress={() => {
+            checkStore();
+            // console.log(savedItems);
+          }}
+          style={tw('p-2 bg-amber-400 rounded-sm')}>
+          <AiOutlineReload size={22} />
+        </TouchableOpacity>
+      </View>
 
-      <View>
+      {/* <View>
         {saved?.map(item => {
           return <Text>{item}</Text>;
         })}
-      </View>
+      </View> */}
       <ScrollView
-        style={tw('mt-4')}
+        style={tw('mt-0 bg-gray-900 rounded-lg')}
         contentContainerStyle={tw(
           'flex flex-row flex-wrap justify-center gap-2',
         )}>
-        {savedItems.map(item => {
+        {savedItems?.map(item => {
           // return <Text>{item.date}</Text>;
+          
           return (
-            <View style={tw('w-[45%] gap-2 mt-2 ')}>
-              <TouchableOpacity onPress={() => {}}>
+            <View style={tw('w-[45%]   mt-2  p-2 ')}>
+              <TouchableOpacity
+                style={tw('gap-2')}
+                onPress={() => {
+                  navigate.navigate('SingleFav', {
+                    date: item.date,
+                  });
+                }}>
                 <Text>{item.date}</Text>
-                <Image
-                  style={tw('h-50')}
-                  source={{uri: item.items[0].low_res_file.url}}
-                />
+                {item?.items.length > 0 ? (
+                  <Image
+                    style={tw('h-50 rounded-md')}
+                    source={{uri: item?.items[0]?.low_res_file.url}}
+                  />
+                ) : (
+                  <View style={tw('bg-neutral-800 h-50 w-full p-2 rounded-md')}>
+                    <Text>Empty</Text>
+                  </View>
+                )}
               </TouchableOpacity>
             </View>
           );

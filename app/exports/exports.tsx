@@ -8,4 +8,10 @@ let parser = (item: string | any) => {
     return err;
   }
 };
-export {tw, color as colors, parser};
+let date = new Date().toLocaleDateString('en-us', {
+  weekday: 'short',
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+export {tw, color as colors, parser,date};
