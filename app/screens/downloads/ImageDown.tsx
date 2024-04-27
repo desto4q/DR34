@@ -26,7 +26,7 @@ export default function ImageDown() {
   return (
     <View style={tw('flex-1 p-2')}>
       <View style={tw('flex-row items-center  justify-between  h-14')}>
-        <Text style={tw('p-2 text-lg capitalize')}>downloads</Text>
+        <Text style={tw('p-2 text-lg capitalize')}>download: Images</Text>
         <TouchableOpacity
           onPress={() => {
             readImages();

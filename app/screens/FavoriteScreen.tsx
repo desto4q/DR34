@@ -36,7 +36,7 @@ export default function FavoriteScreen() {
   }, []);
 
   return (
-    <View style={tw('flex-1')}>
+    <View style={tw('flex-1 p-2')}>
       <View style={tw('p-2 flex-row items-center justify-between')}>
         <Text style={tw('text-lg capitalize')}>Saved Items</Text>
         <TouchableOpacity

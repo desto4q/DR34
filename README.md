@@ -1,79 +1,97 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# R34 App 📱
 
-# Getting Started
+Welcome to R34 App, your ultimate destination for exploring content from Rule34 in a sleek and user-friendly mobile application. This React Native app harnesses the power of the Rule34 API to provide you with a seamless experience of browsing, saving, and enjoying a plethora of images and videos.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features:
 
-## Step 1: Start the Metro Server
+### Search by Tags 🔍
+Easily search for your favorite content by entering relevant tags. Discover a wide range of content tailored to your interests.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+### Image and Video Loading 📸🎥
+Enjoy a smooth browsing experience as images and videos load seamlessly within the app. Dive into a world of captivating content with just a tap.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Save and Favorites ❤️💾
+Never lose track of your favorite finds! Save images and videos directly to your device and bookmark them for quick access in your favorites section.
 
-```bash
-# using npm
-npm start
+### Downloading 📥
+Download your preferred content directly to your device for offline viewing. Enjoy your favorite media anytime, anywhere, without needing an internet connection.
 
-# OR using Yarn
-yarn start
-```
+### ToDo List of Features:
 
-## Step 2: Start your Application
+1. **Complete Download Page**: Enhance the download functionality with progress indicators and download history.
+2. **Settings Page**: Customize your app experience with various settings such as content filters, download quality preferences, and more.
+3. **Theme Page**: Personalize the app's appearance with a range of themes and color schemes to suit your mood.
+4. **UI Refactor**: Polish the user interface for improved aesthetics and usability, ensuring a delightful experience for all users.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Stay tuned for these exciting features coming soon!
 
-### For Android
+## Screenshots:
 
-```bash
-# using npm
-npm run android
+### Home Screen:
+![Home Screen](screenshots/home_screen.png)
 
-# OR using Yarn
-yarn android
-```
+### Search Results:
+![Search Results](screenshots/search_results.png)
 
-### For iOS
+### Favorites:
+![Favorites](screenshots/favorites.png)
 
-```bash
-# using npm
-npm run ios
+### Download Page (Work in Progress):
+![Download Page](screenshots/download_page.png)
 
-# OR using Yarn
-yarn ios
-```
+## Usage:
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+1. **Search**: Enter tags in the search bar to discover content related to your interests.
+2. **Save**: Tap and hold on an image or video to save it to your device.
+3. **Favorites**: Bookmark your favorite content by tapping the heart icon.
+4. **Download**: Tap the download icon to save content for offline viewing.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+## Installation:
 
-## Step 3: Modifying your App
+To run R34 App on your local machine, follow these steps:
 
-Now that you have successfully run the app, let's modify it.
+1. Ensure you have Node.js installed. You can download it from [here](https://nodejs.org/).
+2. Install React Native CLI globally by running the following command in your terminal:
+   ```
+   npm install -g react-native-cli
+   ```
+3. Clone this repository to your local machine:
+   ```
+   git clone <repository_url>
+   ```
+4. Navigate to the project directory:
+   ```
+   cd r34-app
+   ```
+5. Install dependencies:
+   ```
+   npm install
+   ```
+6. Start the development server:
+   ```
+   npm start
+   ```
+7. Open your emulator or connect your physical device and run the app:
+   ```
+   react-native run-android
+   ```
+   or
+   ```
+   react-native run-ios
+   ```
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## Feedback:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+We value your feedback! If you have any suggestions, feature requests, or encounter any issues while using the app, please don't hesitate to reach out to us.
 
-## Congratulations! :tada:
+## Credits:
 
-You've successfully run and modified your React Native App. :partying_face:
+This app is powered by the Rule34 API.
 
-### Now what?
+## License:
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-# Troubleshooting
+---
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Thank you for choosing R34 App! Dive into a world of endless possibilities and let your imagination run wild. Happy browsing! 🚀🔞
