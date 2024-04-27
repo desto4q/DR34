@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@openspacelabs/react-native-zoomable-view": "^2.1.6",
     "@react-native-community/progress-bar-android": "^1.0.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",

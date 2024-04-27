@@ -23,7 +23,7 @@ import {
 
 export default function SavedScreen() {
   let [fileList, setFileList] = useState<any[]>();
-  let navigate:any = useNavigation();
+  let navigate: any = useNavigation();
 
   let readDownloads = async () => {
     let resp = await readdir(ExternalStorageDirectoryPath + '/r34');
@@ -62,7 +62,7 @@ export default function SavedScreen() {
             route = 'VidDownScreen';
           }
           return (
-            <View style={tw('  h-40 p-2 ')}>
+            <View key={item} style={tw('  h-40 p-2 ')}>
               <TouchableOpacity
                 onPress={() => {
                   navigate.navigate(route);

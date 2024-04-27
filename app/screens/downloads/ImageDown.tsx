@@ -10,6 +10,7 @@ import {
   readDir,
   readdir,
 } from '@dr.pogodin/react-native-fs';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ImageDown() {
   let [fileList, setFileList] = useState<ReadDirResItemT[]>();
@@ -20,6 +21,7 @@ export default function ImageDown() {
       setFileList(resp);
     }
   };
+  let navigation: any = useNavigation();
   useEffect(() => {
     readImages();
   }, []);
@@ -42,7 +44,14 @@ export default function ImageDown() {
         {fileList?.map(({path, name}) => {
           return (
             <View key={name} style={tw('w-[48%]   rounded-md')}>
-              <TouchableOpacity style={tw(' p-1  bg-neutral-600 rounded-md')}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('SingleImageScreen', {
+                    path: path,
+                    name: name,
+                  });
+                }}
+                style={tw(' p-1  bg-neutral-600 rounded-md')}>
                 <Image
                   style={tw('h-50  w-full rounded-md')}
                   source={{uri: `file:///${path}`}}

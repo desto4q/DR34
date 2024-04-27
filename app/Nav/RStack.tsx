@@ -7,6 +7,9 @@ import ImageScreen from '../screens/ImageScreen';
 import SingleFav from '../screens/SingleFav';
 import VidDown from '../screens/downloads/VidDown';
 import ImageDown from '../screens/downloads/ImageDown';
+import SingleVIdScreen from '../screens/downloads/SingleVidScreen';
+import SingleImageScreen from '../screens/downloads/SingleImageScreen';
+import SingleVidScreen from '../screens/downloads/SingleVidScreen';
 
 let Stack = createNativeStackNavigator();
 
@@ -17,6 +20,8 @@ function RStack() {
         headerShown: false,
         presentation: 'card',
         animation: 'slide_from_bottom',
+        fullScreenGestureEnabled:true,
+        freezeOnBlur:true
       }}>
       <Stack.Screen name="MainScreen" component={RTabs} />
       <Stack.Screen name="VideoScreen" component={VideoScreen} />
@@ -35,6 +40,16 @@ function RStack() {
       <Stack.Screen
         name="ImageDownScreen"
         component={ImageDown}
+        options={{animation: 'slide_from_right'}}
+      />
+      <Stack.Screen
+        name="SingleVidScreen"
+        component={SingleVidScreen}
+        options={{animation: 'slide_from_right'}}
+      />
+      <Stack.Screen
+        name="SingleImageScreen"
+        component={SingleImageScreen}
         options={{animation: 'slide_from_right'}}
       />
     </Stack.Navigator>

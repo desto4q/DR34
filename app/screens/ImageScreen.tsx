@@ -14,6 +14,7 @@ import {Notifier, NotifierComponents} from 'react-native-notifier';
 import NotifComp from '../Components/NotifComp';
 import {ProgressBar} from '@react-native-community/progress-bar-android';
 import {AiFillCloseCircle} from 'rn-icons/ai';
+import {ReactNativeZoomableView} from '@openspacelabs/react-native-zoomable-view';
 const done = () => {
   return Notifier.showNotification({
     title: 'Download complete',
@@ -116,9 +117,16 @@ export default function ImageScreen({route}: {route: any}) {
         style={tw(
           ' h-[400px] w-full justify-center p-1 bg-opacity-10 bg-amber-600 rounded-md',
         )}>
-        <Image
-          source={{uri: item.high_res_file.url}}
-          style={{...tw('h-full w-full'), objectFit: 'contain'}}></Image>
+        <ReactNativeZoomableView
+          maxZoom={25}
+          minZoom={1}
+          zoomStep={0.5}
+          initialZoom={1}
+          bindToBorders={true}>
+          <Image
+            source={{uri: item.high_res_file.url}}
+            style={{...tw('h-full w-full'), objectFit: 'contain'}}></Image>
+        </ReactNativeZoomableView>
       </View>
       <ScrollView style={tw('flex-1 p-2')}>
         <View style={{flex: 1}}>

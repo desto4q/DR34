@@ -10,6 +10,7 @@ import {
 import {tw} from '../../exports/exports';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {AiOutlineReload} from 'rn-icons/ai';
+import {useNavigation} from '@react-navigation/native';
 
 export default function VidDown() {
   let thumbs_path = ExternalStorageDirectoryPath + '/r34/video/.thumbs/';
@@ -21,6 +22,7 @@ export default function VidDown() {
       setFileList(resp);
     }
   };
+  let navigation: any = useNavigation();
   useEffect(() => {
     readImages();
   }, []);
@@ -51,6 +53,13 @@ export default function VidDown() {
           return (
             <View key={name} style={tw('w-[48%]   rounded-md')}>
               <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('SingleVidScreen', {
+                    path: path,
+                    name: name,
+                    poster: thumbNail,
+                  });
+                }}
                 style={tw(' p-1  bg-amber-400 bg-opacity-40 rounded-md')}>
                 <Image
                   style={tw('h-50  w-full rounded-md')}
