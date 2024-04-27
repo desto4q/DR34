@@ -5,8 +5,11 @@ import VideoScreen from '../screens/VideoScreen';
 import SearchResultsScreen from '../screens/SearchResultsScreen';
 import ImageScreen from '../screens/ImageScreen';
 import SingleFav from '../screens/SingleFav';
+import VidDown from '../screens/downloads/VidDown';
+import ImageDown from '../screens/downloads/ImageDown';
 
 let Stack = createNativeStackNavigator();
+
 function RStack() {
   return (
     <Stack.Navigator
@@ -22,6 +25,16 @@ function RStack() {
       <Stack.Screen
         name="SingleFav"
         component={SingleFav}
+        options={{animation: 'slide_from_right'}}
+      />
+      <Stack.Screen
+        name="VidDownScreen"
+        component={VidDown}
+        options={{animation: 'slide_from_right'}}
+      />
+      <Stack.Screen
+        name="ImageDownScreen"
+        component={ImageDown}
         options={{animation: 'slide_from_right'}}
       />
     </Stack.Navigator>

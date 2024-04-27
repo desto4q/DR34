@@ -18,7 +18,7 @@ import {
 } from '@dr.pogodin/react-native-fs';
 import {Notifier, NotifierComponents} from 'react-native-notifier';
 import {colors, tw} from '../exports/exports';
-import NotifComp from './NotifComp';
+import NotifComp from '../Components/NotifComp';
 import {ProgressBar} from '@react-native-community/progress-bar-android';
 import {AiFillCloseCircle} from 'rn-icons/ai';
 import Video, {VideoRef} from 'react-native-video';
